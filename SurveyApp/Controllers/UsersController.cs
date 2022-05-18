@@ -9,5 +9,10 @@ namespace SurveyApp.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult SubmitRegistration()
+        {
+            return Redirect("/Auth/Login");
+        }
     }
 }
