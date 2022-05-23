@@ -1,9 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SurveyApp.Database;
+using SurveyApp.Models.Surveys;
 
 namespace SurveyApp.Controllers
 {
     public class SurveysController : Controller
     {
+        private readonly AppDbContext _db;
+
+        public SurveysController(AppDbContext db)
+        {
+            _db = db;
+        }
+        
         [HttpGet]
         public IActionResult Create()
         {
@@ -13,6 +22,12 @@ namespace SurveyApp.Controllers
         public IActionResult SubmitSurvey()
         {
             return Redirect("/Surveys/Index");
+        }
+
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return View(new SurveryIndexViewModel());
         }
     }
 }
