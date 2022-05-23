@@ -8,7 +8,7 @@ namespace SurveyApp.Models.Surveys
 
         public string Name { get; set; }
 
-        [Range(0, 50, ErrorMessage = "Maksimalna duzina od 50 karaktera.")]
+        [MaxLength(50, ErrorMessage = "Description can't be longer than 50 characters.")]
         public string Description { get; set; }
     }
 }
