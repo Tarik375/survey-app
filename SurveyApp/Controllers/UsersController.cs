@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SurveyApp.Models.Users;
 
 namespace SurveyApp.Controllers
 {
@@ -10,9 +11,15 @@ namespace SurveyApp.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SubmitRegistration()
+        public IActionResult SubmitRegistration([FromForm] RegisterViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Register", model);
+            }
             return Redirect("/Auth/Login");
         }
+       
+
     }
 }
