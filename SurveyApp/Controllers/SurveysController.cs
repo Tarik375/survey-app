@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-<<<<<<< HEAD
-=======
 using SurveyApp.Database;
->>>>>>> master
 using SurveyApp.Models.Surveys;
 
 namespace SurveyApp.Controllers
