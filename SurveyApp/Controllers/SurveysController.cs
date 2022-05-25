@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SurveyApp.Database;
+using SurveyApp.Database.Models;
 using SurveyApp.Models.Surveys;
 
 namespace SurveyApp.Controllers
