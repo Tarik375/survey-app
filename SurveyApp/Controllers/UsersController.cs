@@ -28,8 +28,8 @@ namespace SurveyApp.Controllers
             }
 
             List<User> users = _db.Users
-                                        .Where(x => x.Username.ToLower() == model.Username.ToLower() || x.Email.ToLower() == model.Email.ToLower())
-                                        .ToList();
+                .Where(x => x.Username.ToLower() == model.Username.ToLower() || x.Email.ToLower() == model.Email.ToLower())
+                .ToList();
 
             if (users.Any(x => x.Email.ToLower() == model.Email.ToLower()))
             {
