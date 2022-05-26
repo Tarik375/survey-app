@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using SurveyApp.Database;
 using SurveyApp.Database.Models;
 using SurveyApp.Models.Surveys;
@@ -32,7 +33,10 @@ namespace SurveyApp.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            List<Survey> surveys = _db.Surveys.ToList();
+            long userId = long.Parse(HttpContext.User.Claims
+                .FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
+            
+            List<Survey> surveys =  _db.Surveys.Where(survery => survery.Id == userId).ToList();
             SurveyIndexViewModel surveyIndex = new SurveyIndexViewModel();
             surveys.ForEach(survey =>
             {
