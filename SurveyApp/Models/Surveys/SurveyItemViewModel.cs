@@ -1,6 +1,6 @@
 namespace SurveyApp.Models.Surveys;
 
-public class SurveryItemViewMOdel
+public class SurveyItemViewModel
 {
     public long Id { get; set; }
     public string Name { get; set; }

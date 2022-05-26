@@ -32,7 +32,18 @@ namespace SurveyApp.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(new SurveryIndexViewModel());
+            List<Survey> surveys = _db.Surveys.ToList();
+            SurveyIndexViewModel surveyIndex = new SurveyIndexViewModel();
+            surveys.ForEach(survey =>
+            {
+                SurveyItemViewModel surveyItem = new SurveyItemViewModel();
+                surveyItem.Id = survey.Id;
+                surveyItem.Name = survey.Name;
+                surveyItem.Description = survey.Description;
+                surveyItem.CreatedDate = survey.CreatedDate; 
+                surveyIndex.Surverys.Add(surveyItem);
+            });
+            return View(surveyIndex);
         }
     }
 }
