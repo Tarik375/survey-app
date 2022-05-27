@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using SurveyApp.Database;
+using SurveyApp.Database.Models;
 using SurveyApp.Models.Surveys;
 
 namespace SurveyApp.Controllers
@@ -37,7 +39,22 @@ namespace SurveyApp.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(new SurveryIndexViewModel());
+            long userId = long.Parse(HttpContext.User.Claims
+                .FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
+            
+            List<Survey> surveys =  _db.Surveys.Where(survey => survey.Id == userId).ToList();
+            SurveyIndexViewModel surveyIndex = new SurveyIndexViewModel();
+            surveyIndex.Surverys = new List<SurveyItemViewModel>(); 
+            surveys.ForEach(survey =>
+            {
+                SurveyItemViewModel surveyItem = new SurveyItemViewModel();
+                surveyItem.Id = survey.Id;
+                surveyItem.Name = survey.Name;
+                surveyItem.Description = survey.Description;
+                surveyItem.CreatedDate = survey.CreatedDate; 
+                surveyIndex.Surverys.Add(surveyItem);
+            });
+            return View(surveyIndex);
         }
     }
 }
