@@ -29,9 +29,16 @@ namespace SurveyApp.Controllers
             }
             else
             {
-                var name = model.Name;
-                var description = model.Description;
                 long userId = long.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+                var survey = new Survey()
+                {
+                    Name = model.Name,
+                    Description = model.Description,
+                    CreatedDate = DateTime.Now,
+                    UserId = userId,
+                };
+                _db.Surveys.Add(survey);
+                _db.SaveChanges();
             }
             return Redirect("/Surveys/Index");
         }
