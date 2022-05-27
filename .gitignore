@@ -451,8 +451,5 @@ $RECYCLE.BIN/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
-
-./SurveyApp/appsettings.json
 !.vscode/extensions.json
 
-./SurveyApp/appsettings.json
