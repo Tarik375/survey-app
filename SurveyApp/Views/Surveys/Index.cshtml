@@ -19,10 +19,10 @@
             <td>@survey.Name</td>
             <td style="width: 35%; text-align: right">
                 <div class="w-100">
-                    <a asp-controller="Surveys" asp-action="" class="btn btn-primary mx-2">Edit</a>
-                    <a asp-controller="Surveys" asp-action="" class="btn btn-secondary mx-2">Details</a>
-                    <a asp-controller="Surveys" asp-action="" class="btn btn-success mx-2">Results</a>
-                    <a asp-controller="Surveys" asp-action="" class="btn btn-danger mx-2">Delete</a>
+                    <a asp-controller="Surveys" asp-action="Edit" asp-route-id="@survey.Id" class="btn btn-primary mx-2">Edit</a>
+                    <a asp-controller="Surveys" asp-action="Details" asp-route-id="@survey.Id" class="btn btn-secondary mx-2">Details</a>
+                    <a asp-controller="Surveys" asp-action="Result" asp-route-id="@survey.Id" class="btn btn-success mx-2">Results</a>
+                    <a asp-controller="Surveys" asp-action="Delete" asp-route-id="@survey.Id" class="btn btn-danger mx-2">Delete</a>
                 </div>
             </td>
         }
