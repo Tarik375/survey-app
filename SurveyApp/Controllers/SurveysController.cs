@@ -27,19 +27,19 @@ namespace SurveyApp.Controllers
             {
                 return View("Create", model);
             }
-            else
-            {
+            
+            
                 long userId = long.Parse(HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
                 var survey = new Survey()
                 {
                     Name = model.Name,
                     Description = model.Description,
-                    CreatedDate = DateTime.Now,
+                    CreatedDate = DateTime.UtcNow,
                     UserId = userId,
                 };
                 _db.Surveys.Add(survey);
                 _db.SaveChanges();
-            }
+            
             return Redirect("/Surveys/Index");
         }
 
