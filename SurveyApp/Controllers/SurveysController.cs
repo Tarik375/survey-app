@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SurveyApp.Database;
 using SurveyApp.Models.Surveys;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using SurveyApp.Database.Models;
+
 
 
 
@@ -44,48 +41,36 @@ namespace SurveyApp.Controllers
         [HttpGet]
         public IActionResult Edit(int? Id)
         {
-            ViewData["Id"] = Id;
-            return View();
+            var survey = _db.Surveys.FirstOrDefault(x => x.Id == Id);
+            EditSurveyViewModel model = new EditSurveyViewModel();
+            model.Id = survey.Id;
+            model.Name = survey.Name;
+            model.Description = survey.Description;
+            return View(model);
             
         }
         
         [HttpPost]
-        public async Task<IActionResult> Edit([FromForm] EditSurveyViewModel model, [FromQuery(Name = "Id")] int? Id)
+        public async Task<IActionResult> Edit([FromForm] EditSurveyViewModel model)
         {
-            ViewData["Id"] = Id;
+           
 
             if (!ModelState.IsValid)
             {
                 return View("Edit");
             }
 
-            var survey =  _db.Surveys.FirstOrDefault(s => s.Name == model.Name ||  s.Description == model.Description);
-
+            var survey =  _db.Surveys.FirstOrDefault(x => x.Id == model.Id );
+            survey.Name = model.Name;
+            survey.Description = model.Description;
+            await _db.SaveChangesAsync();
             
 
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, survey.Name),
-                new Claim(ClaimTypes.NameIdentifier, survey.Id.ToString()),
-                new Claim(ClaimTypes.Name, survey.Description)
-            };
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-            await HttpContext.SignInAsync(claimsPrincipal);
+           
 
 
-            List<Survey> surveys = _db.Surveys.Where(survey => survey.Id == Id).ToList();
-            SurveyEditViewModel surveyIndex = new SurveyEditViewModel();
-            surveyIndex.Surverys = new List<EditSurveyViewModel>();
-            surveys.ForEach(survey =>
-            {
-                EditSurveyViewModel surveyItem = new EditSurveyViewModel();
-                surveyItem.Id = survey.Id;
-                surveyItem.Name = survey.Name;
-                surveyItem.Description = survey.Description;
-                surveyIndex.Surverys.Add(surveyItem);
-            });
-            return View(surveyIndex);
+           
+            return Redirect("/Surveys/Index");
         }
     }
 }
