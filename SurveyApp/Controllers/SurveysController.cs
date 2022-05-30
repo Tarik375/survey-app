@@ -2,10 +2,6 @@
 using SurveyApp.Database;
 using SurveyApp.Models.Surveys;
 
-
-
-
-
 namespace SurveyApp.Controllers
 {
     public class SurveysController : Controller
@@ -53,8 +49,6 @@ namespace SurveyApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit([FromForm] EditSurveyViewModel model)
         {
-           
-
             if (!ModelState.IsValid)
             {
                 return View("Edit");
@@ -64,16 +58,7 @@ namespace SurveyApp.Controllers
             survey.Name = model.Name;
             survey.Description = model.Description;
             await _db.SaveChangesAsync();
-            
-
-           
-
-
-           
             return Redirect("/Surveys/Index");
         }
     }
 }
-
-
-  
