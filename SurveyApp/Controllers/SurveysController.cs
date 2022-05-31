@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SurveyApp.Database;
 using SurveyApp.Database.Models;
 using SurveyApp.Models.Surveys;
@@ -93,6 +94,13 @@ namespace SurveyApp.Controllers
             _db.Surveys.Remove(survey);
             _db.SaveChanges();
             return Redirect("/Surveys/Index");
+        }
+
+        [HttpGet]
+        public IActionResult Details(long Id)
+        {
+            var survey = _db.Surveys.Include(x => x.Questions);
+            return View();
         }
     }
 }
