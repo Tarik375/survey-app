@@ -85,5 +85,15 @@ namespace SurveyApp.Controllers
             await _db.SaveChangesAsync();
             return Redirect("/Surveys/Index");
         }
+
+        [HttpGet]
+        public IActionResult Delete(long? Id)
+        {
+            var survey = _db.Surveys.FirstOrDefault(x => x.Id == Id);
+            _db.Surveys.Attach(survey);
+            _db.Surveys.Remove(survey);
+            _db.SaveChanges();
+            return Redirect("/Surveys/Index");
+        }
     }
 }
