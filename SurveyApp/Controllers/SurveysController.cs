@@ -45,7 +45,7 @@ namespace SurveyApp.Controllers
         public IActionResult Index()
         {
             long userId = long.Parse(HttpContext.User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
-            List<Survey> surveys = _db.Surveys.Where(survey => survey.Id == userId).ToList();
+            List<Survey> surveys = _db.Surveys.Where(survey => survey.UserId == userId).ToList();
             SurveyIndexViewModel surveyIndex = new SurveyIndexViewModel();
             surveyIndex.Surverys = new List<SurveyItemViewModel>();
             surveys.ForEach(survey =>
