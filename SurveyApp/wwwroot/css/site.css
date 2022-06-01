@@ -1,18 +1,70 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
+
+.row {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ADD8E6;
+    border-radius: 10px;
+}
+
+h1{
+    position:center;
+}
+
+form {
+    box-sizig: border-box;
+    width: 370px;
+    height: 420px;
+}
+
+.form-group {
+    position: relative;
+    margin: 30px 0;
+    
+}
+
+.form-control, .control-label{
+    padding: 0 20px;
+    border-radius: 5px;
+    width: 80%;
+    height: 30px;
+    margin: 0 10% 0 10%;
+}
+
+form .btn-primary {
+    width: 80%;
+    height: 50px;
+    border: 1px solid;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 10% 0 10%;
+}
+
+.row a {
+    text-decoration: none;
+    margin: 0 8% 0 15%;
+}
+
+    .row a:hover {
+        text-decoration: underline;
+    }
