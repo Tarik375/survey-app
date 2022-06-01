@@ -17,7 +17,7 @@ body {
     margin-bottom: 60px;
 }
 
-.row {
+.lr-row {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -26,45 +26,66 @@ body {
     border-radius: 10px;
 }
 
-h1{
-    position:center;
+    .lr-row h1 {
+        text-align: center;
+        padding: 0 0 20px 0;
+        border-bottom: 1px solid silver;
+    }
+
+#l-form {
+    width: 350px;
+    height: 400px;
+    box-sizing: border-box;
 }
 
-form {
-    box-sizig: border-box;
-    width: 370px;
-    height: 420px;
+#r-form {
+    width: 300px;
+    height: 460px;
+    box-sizing: border-box;
 }
 
-.form-group {
-    position: relative;
-    margin: 30px 0;
-    
+.lr-group {
+    margin: 30px 0 0 10px;
 }
 
-.form-control, .control-label{
-    padding: 0 20px;
+.l-input {
     border-radius: 5px;
-    width: 80%;
+    width: 90%;
     height: 30px;
-    margin: 0 10% 0 10%;
+    margin: 0 5px 0 65px;
 }
 
-form .btn-primary {
-    width: 80%;
+.l-label {
+    position: center;
+    height: 30px;
+    margin: 0 5% 0 25%;
+}
+
+.r-input, .r-label {
+    position: center;
+    padding: 0 15px;
+    border-radius: 5px;
+    width: 90%;
+    height: 30px;
+    margin: 0 5% 0 30%;
+}
+
+.lr-btn {
+    width: 50%;
     height: 50px;
     border: 1px solid;
     border-radius: 25px;
     font-size: 16px;
     font-weight: 700;
-    margin: 0 10% 0 10%;
+    margin: 20px 0 0 135px;
 }
 
-.row a {
+#lr-a {
     text-decoration: none;
-    margin: 0 8% 0 15%;
+    font-size: 12px;
+    margin: 0 0 0 105px;
 }
 
-    .row a:hover {
+    #lr-a:hover {
         text-decoration: underline;
     }
