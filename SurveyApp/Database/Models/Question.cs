@@ -9,6 +9,6 @@
 
         public long SurveyId { get; set; }
 
-        public Survey? SurveyDetailsViewModel { get; set; }
+        public Survey? Survey { get; set; }
     }
 }

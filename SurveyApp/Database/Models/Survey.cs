@@ -1,6 +1,4 @@
-﻿using SurveyApp.Models.Questions;
-
-namespace SurveyApp.Database.Models
+﻿namespace SurveyApp.Database.Models
 {
     public class Survey
 
@@ -11,8 +9,6 @@ namespace SurveyApp.Database.Models
         public DateTime CreatedDate { get; set; }
         public long UserId { get; set; }
         public User User { get; set; }
-        public List<QuestionItemViewModel> Questions { get; set; }
-
-
+        public List<Question> Questions { get; set; }
     }
 }

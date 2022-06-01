@@ -1,4 +1,6 @@
-﻿namespace SurveyApp.Models.Surveys
+﻿using SurveyApp.Models.Questions;
+
+namespace SurveyApp.Models.Surveys
 {
     public class SurveyDetailsViewmodel
     {
@@ -8,6 +10,6 @@
 
         public string? Description { get; set; }
 
-        public List<Questions.QuestionItemViewModel> Questions { get; set; }
+        public List<QuestionItemViewModel> Questions { get; set; }
     }
 }
