@@ -39,5 +39,16 @@ namespace SurveyApp.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Delete(long? Id)
+        {
+            var question = _db.Questions.FirstOrDefault(x => x.Id == Id);
+            _db.Questions.Remove(question);
+            _db.SaveChanges();
+            return RedirectToAction("Details", "Survey", new { id = question.SurveyId });
+
+        }
     }
+    
 }
