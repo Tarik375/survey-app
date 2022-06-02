@@ -102,5 +102,26 @@ namespace SurveyApp.Controllers
             var survey = _db.Surveys.Include(x => x.Questions);
             return View();
         }
+
+        [HttpGet] 
+        public IActionResult TakeSurvey(long Id)
+        {
+            var survey =  _db.Surveys.Where(survey => survey.Id == Id)
+                .Include(survey => survey.Questions).FirstOrDefault();
+            List<TakeSurveyQuestionViewModel> questions = new List<TakeSurveyQuestionViewModel>();
+            survey.Questions.ForEach(question =>
+            {
+                var questionViewModel = new TakeSurveyQuestionViewModel();
+                questionViewModel.Question = question.Content; 
+                questions.Add(questionViewModel); 
+            });
+            var takeSurveyModel = new TakeSurveyViewModel(); 
+            takeSurveyModel.Name = survey.Name;
+            takeSurveyModel.Description = survey.Description;
+            takeSurveyModel.Questions = questions; 
+
+            return View(takeSurveyModel); 
+
+        }
     }
 }
