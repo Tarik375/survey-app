@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SurveyApp.Database;
 using SurveyApp.Database.Models;
@@ -5,6 +6,7 @@ using SurveyApp.Models.Questions;
 
 namespace SurveyApp.Controllers
 {
+    [Authorize]
     public class QuestionsController : Controller
     {
         private readonly AppDbContext _db;
@@ -14,7 +16,14 @@ namespace SurveyApp.Controllers
             _db = db; 
         }
         
-        
+        [HttpGet]
+        public IActionResult Create(long SurveyId)
+        {
+            CreateQuestionViewModel model = new CreateQuestionViewModel();
+            model.SurveyId = SurveyId;
+            return View(model);
+            
+        }
         [HttpPost]
         public IActionResult Create([FromForm] CreateQuestionViewModel model)
         {
@@ -35,11 +44,6 @@ namespace SurveyApp.Controllers
             return RedirectToAction("Details", "Surveys", new { id = model.SurveyId }); 
         }
         
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet]
         public IActionResult Delete(long? Id)
         {

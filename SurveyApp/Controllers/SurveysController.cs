@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SurveyApp.Database;
@@ -7,6 +8,7 @@ using SurveyApp.Models.Surveys;
 
 namespace SurveyApp.Controllers
 {
+    [Authorize]
     public class SurveysController : Controller
     {
         private readonly AppDbContext _db;
@@ -21,8 +23,9 @@ namespace SurveyApp.Controllers
         {
             return View();
         }
+        
         [HttpPost]
-        public IActionResult SubmitSurvey([FromForm] CreateSurveyViewModel model)
+        public IActionResult Create([FromForm] CreateSurveyViewModel model)
         {
             if (!ModelState.IsValid)
             {
