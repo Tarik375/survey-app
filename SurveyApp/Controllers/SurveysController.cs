@@ -23,9 +23,9 @@ namespace SurveyApp.Controllers
         {
             return View();
         }
-        [AllowAnonymous]
+        
         [HttpPost]
-        public IActionResult SubmitSurvey([FromForm] CreateSurveyViewModel model)
+        public IActionResult Create([FromForm] CreateSurveyViewModel model)
         {
             if (!ModelState.IsValid)
             {
