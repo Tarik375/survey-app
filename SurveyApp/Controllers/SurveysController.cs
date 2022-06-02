@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SurveyApp.Database;
 using SurveyApp.Database.Models;
 using SurveyApp.Models.Surveys;
@@ -122,6 +123,29 @@ namespace SurveyApp.Controllers
 
             return View(takeSurveyModel); 
 
+        }
+
+        [HttpPost]
+        public IActionResult TakeSurvey(TakeSurveyViewModel takeSurveyViewModel) 
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("TakeSurvey", takeSurveyViewModel); 
+            }
+            
+            takeSurveyViewModel.Questions.ForEach(question =>
+            {
+                var answer = new Answer()
+                {
+                    Content = question.Answer,
+                    QuestionId = question.QuestionId,
+                };
+
+                _db.Answers.Add(answer); 
+            });
+
+            _db.SaveChanges();
+            return View("ThankYou");
         }
     }
 }
