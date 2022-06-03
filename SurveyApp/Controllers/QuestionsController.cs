@@ -50,7 +50,7 @@ namespace SurveyApp.Controllers
             var question = _db.Questions.FirstOrDefault(x => x.Id == Id);
             _db.Questions.Remove(question);
             _db.SaveChanges();
-            return RedirectToAction("Details", "Survey", new { id = question.SurveyId });
+            return RedirectToAction("Details", "Surveys", new { id = question.SurveyId });
 
         }
     }
