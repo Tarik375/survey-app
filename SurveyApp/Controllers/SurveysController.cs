@@ -135,7 +135,8 @@ namespace SurveyApp.Controllers
             survey.Questions.ForEach(question =>
             {
                 var questionViewModel = new TakeSurveyQuestionViewModel();
-                questionViewModel.Question = question.Content; 
+                questionViewModel.Question = question.Content;
+                questionViewModel.QuestionId = question.Id; 
                 questions.Add(questionViewModel); 
             });
             var takeSurveyModel = new TakeSurveyViewModel(); 
