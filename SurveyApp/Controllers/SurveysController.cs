@@ -105,6 +105,7 @@ namespace SurveyApp.Controllers
         {
             var survey = _db.Surveys.Include(x => x.Questions).FirstOrDefault(x => x.Id == Id);
             SurveyDetailsViewmodel model = new SurveyDetailsViewmodel();
+            model.Id = Id;
             model.Name = survey.Name;
             model.Description = survey.Description;
             model.Questions = new List<QuestionItemViewModel>();
