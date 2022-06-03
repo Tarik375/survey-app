@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SurveyApp.Database;
 using SurveyApp.Database.Models;
 using SurveyApp.Models.Questions;
@@ -121,6 +122,53 @@ namespace SurveyApp.Controllers
             );
 
             return View(model);
+        }
+
+        
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult TakeSurvey(long Id)
+        {
+            var survey =  _db.Surveys.Where(survey => survey.Id == Id)
+                .Include(survey => survey.Questions).FirstOrDefault();
+            List<TakeSurveyQuestionViewModel> questions = new List<TakeSurveyQuestionViewModel>();
+            survey.Questions.ForEach(question =>
+            {
+                var questionViewModel = new TakeSurveyQuestionViewModel();
+                questionViewModel.Question = question.Content; 
+                questions.Add(questionViewModel); 
+            });
+            var takeSurveyModel = new TakeSurveyViewModel(); 
+            takeSurveyModel.Name = survey.Name;
+            takeSurveyModel.Description = survey.Description;
+            takeSurveyModel.Questions = questions; 
+
+            return View(takeSurveyModel); 
+
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult TakeSurvey(TakeSurveyViewModel takeSurveyViewModel) 
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("TakeSurvey", takeSurveyViewModel); 
+            }
+            
+            takeSurveyViewModel.Questions.ForEach(question =>
+            {
+                var answer = new Answer()
+                {
+                    Content = question.Answer,
+                    QuestionId = question.QuestionId,
+                };
+
+                _db.Answers.Add(answer); 
+            });
+
+            _db.SaveChanges();
+            return View("ThankYou");
         }
     }
 }
