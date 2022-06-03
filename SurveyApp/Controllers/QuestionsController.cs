@@ -17,10 +17,10 @@ namespace SurveyApp.Controllers
         }
         
         [HttpGet]
-        public IActionResult Create(long SurveyId)
+        public IActionResult Create(long Id)
         {
             CreateQuestionViewModel model = new CreateQuestionViewModel();
-            model.SurveyId = SurveyId;
+            model.SurveyId = Id;
             return View(model);
             
         }

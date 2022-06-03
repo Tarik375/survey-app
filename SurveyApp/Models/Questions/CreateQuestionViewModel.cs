@@ -7,7 +7,7 @@ public class CreateQuestionViewModel
     [Required(ErrorMessage = "Question is required.")]
     [StringLength(1000, MinimumLength = 3, ErrorMessage = "Question must be between 3 and 1000 characters long.")]
     
-    public string? Content;
+    public string? Content { get; set; }
 
-    public long SurveyId; 
+    public long SurveyId { get; set; }
 }
