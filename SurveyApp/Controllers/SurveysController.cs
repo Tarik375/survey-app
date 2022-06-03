@@ -58,5 +58,10 @@ namespace SurveyApp.Controllers
             });
             return View(surveyIndex);
         }
+        [HttpGet]
+        public IActionResult Result(long surveyId)
+        {
+            return View();
+        }
     }
 }
