@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SurveyApp.Database;
 
@@ -11,9 +12,10 @@ using SurveyApp.Database;
 namespace SurveyApp.Database.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220601160431_CreateAnswerTable")]
+    partial class CreateAnswerTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,8 +40,6 @@ namespace SurveyApp.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuestionId");
-
                     b.ToTable("Answers");
                 });
 
@@ -54,10 +54,15 @@ namespace SurveyApp.Database.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("QuestionId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("SurveyId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
 
                     b.HasIndex("SurveyId");
 
@@ -120,19 +125,12 @@ namespace SurveyApp.Database.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("SurveyApp.Database.Models.Answer", b =>
-                {
-                    b.HasOne("SurveyApp.Database.Models.Question", "Question")
-                        .WithMany("Answers")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Question");
-                });
-
             modelBuilder.Entity("SurveyApp.Database.Models.Question", b =>
                 {
+                    b.HasOne("SurveyApp.Database.Models.Question", null)
+                        .WithMany("Questions")
+                        .HasForeignKey("QuestionId");
+
                     b.HasOne("SurveyApp.Database.Models.Survey", "Survey")
                         .WithMany("Questions")
                         .HasForeignKey("SurveyId")
@@ -155,7 +153,7 @@ namespace SurveyApp.Database.Migrations
 
             modelBuilder.Entity("SurveyApp.Database.Models.Question", b =>
                 {
-                    b.Navigation("Answers");
+                    b.Navigation("Questions");
                 });
 
             modelBuilder.Entity("SurveyApp.Database.Models.Survey", b =>
