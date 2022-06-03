@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SurveyApp.Database;
 using SurveyApp.Database.Models;
+using SurveyApp.Models.Questions;
 using SurveyApp.Models.Surveys;
 
 namespace SurveyApp.Controllers
@@ -102,8 +103,23 @@ namespace SurveyApp.Controllers
         [HttpGet]
         public IActionResult Details(long Id)
         {
-            var survey = _db.Surveys.Include(x => x.Questions);
-            return View();
+            var survey = _db.Surveys.Include(x => x.Questions).FirstOrDefault(x => x.Id == Id);
+            SurveyDetailsViewmodel model = new SurveyDetailsViewmodel();
+            model.Name = survey.Name;
+            model.Description = survey.Description;
+            model.Questions = new List<QuestionItemViewModel>();
+            survey.Questions.ForEach(q =>
+            {
+                QuestionItemViewModel question = new QuestionItemViewModel();
+                question.Id = q.Id;
+                question.Content = q.Content;
+                question.SurveyId = q.SurveyId;
+                model.Questions.Add(question);
+
+            }
+            );
+
+            return View(model);
         }
     }
 }
