@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -104,7 +105,9 @@ namespace SurveyApp.Controllers
             return View();
         }
 
-        [HttpGet] 
+        
+        [HttpGet]
+        [AllowAnonymous]
         public IActionResult TakeSurvey(long Id)
         {
             var survey =  _db.Surveys.Where(survey => survey.Id == Id)
@@ -126,6 +129,7 @@ namespace SurveyApp.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult TakeSurvey(TakeSurveyViewModel takeSurveyViewModel) 
         {
             if (!ModelState.IsValid)
