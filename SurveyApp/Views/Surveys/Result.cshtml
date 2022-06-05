@@ -1,0 +1,27 @@
+﻿@model SurveyApp.Models.Surveys.SurveyResultViewModel
+@{
+    ViewData["Title"] = "My Survey";
+}
+
+<h1>Survey</h1>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Question</th>
+        </tr>
+    </thead>        
+    <tbody>
+        @foreach (var question in Model.Results)
+        {
+            <tr>
+                <td>@question.Content</td>
+            </tr>
+            @foreach(var answer in question.Answers)
+            {
+                <tr>
+                <td>@answer.Content</td>
+                </tr>
+            } 
+        }
+    </tbody>
+</table> 

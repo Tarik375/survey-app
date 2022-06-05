@@ -63,9 +63,9 @@ namespace SurveyApp.Controllers
             return View(surveyIndex);
         }
         [HttpGet]
-        public IActionResult Result(long surveyId)
+        public IActionResult Result(long Id)
         {
-            var survey = _db.Surveys.Where(survey => survey.Id == surveyId)
+            var survey = _db.Surveys.Where(survey => survey.Id == Id)
                 .Include(survey => survey.Questions)
                 .ThenInclude(Question => Question.Answers)
                 .FirstOrDefault();
