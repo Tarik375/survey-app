@@ -4,15 +4,17 @@
     ViewData["Title"] = "Take Survey";
 }
 
-<h1>You are taking survey</h1>
 <form asp-action="TakeSurvey" asp-controller="Surveys">
     <div>
-        Name: @Model.Name
+        <h1>@Model.Name</h1>
         <input hidden asp-for="@Model.Name"/>
     </div>
     <div>
-        Description: @Model.Description
-        <input hidden asp-for="@Model.Description"/>
+        <h4>@Model.Description</h4>
+        <input hidden asp-for="@Model.Description"/> 
+    </div>
+    <div>
+        <h6>Please answer all questions</h6>
     </div>
     <div>
     
