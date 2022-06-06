@@ -25,7 +25,7 @@ namespace SurveyApp.Controllers
         {
             return View();
         }
-        
+
         [HttpPost]
         public IActionResult Create([FromForm] CreateSurveyViewModel model)
         {
@@ -64,6 +64,37 @@ namespace SurveyApp.Controllers
             });
             return View(surveyIndex);
         }
+        [HttpGet]
+        public IActionResult Result(long Id)
+        {
+            var survey = _db.Surveys.Where(survey => survey.Id == Id)
+                .Include(survey => survey.Questions)
+                .ThenInclude(Question => Question.Answers)
+                .FirstOrDefault();
+            SurveyResultViewModel surveyResult = new SurveyResultViewModel();
+            List<ResultItemViewModel> rezultati = new List<ResultItemViewModel>();
+            surveyResult.Name = survey.Name;
+            surveyResult.Description = survey.Description;
+            surveyResult.surveyId = survey.Id;
+            survey.Questions.ForEach(question =>
+            {
+                List<AnswerItemViewModel> Answers = new List<AnswerItemViewModel>();
+                AnswerItemViewModel answerItemViewModel = new AnswerItemViewModel();
+                question.Answers.ForEach(answer =>
+                {
+                    answerItemViewModel.AnswerId = answer.Id;
+                    answerItemViewModel.Content = answer.Content;
+                    Answers.Add(answerItemViewModel);
+                });
+                ResultItemViewModel resultItemViewModel = new ResultItemViewModel();
+                resultItemViewModel.questionId = question.Id;
+                resultItemViewModel.Content = question.Content;
+                resultItemViewModel.Answers = Answers;
+                rezultati.Add(resultItemViewModel);
+            });
+            surveyResult.Results = rezultati;
+            return View(surveyResult);
+        }
 
         [HttpGet]
         public IActionResult Edit(int? Id)
@@ -74,9 +105,9 @@ namespace SurveyApp.Controllers
             model.Name = survey.Name;
             model.Description = survey.Description;
             return View(model);
-            
+
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Edit([FromForm] EditSurveyViewModel model)
         {
@@ -85,7 +116,7 @@ namespace SurveyApp.Controllers
                 return View("Edit");
             }
 
-            var survey =  _db.Surveys.FirstOrDefault(x => x.Id == model.Id );
+            var survey = _db.Surveys.FirstOrDefault(x => x.Id == model.Id);
             survey.Name = model.Name;
             survey.Description = model.Description;
             await _db.SaveChangesAsync();
