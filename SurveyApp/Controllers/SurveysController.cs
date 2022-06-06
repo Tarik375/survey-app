@@ -79,9 +79,9 @@ namespace SurveyApp.Controllers
             survey.Questions.ForEach(question =>
             {
                 List<AnswerItemViewModel> Answers = new List<AnswerItemViewModel>();
-                AnswerItemViewModel answerItemViewModel = new AnswerItemViewModel();
                 question.Answers.ForEach(answer =>
                 {
+                    AnswerItemViewModel answerItemViewModel = new AnswerItemViewModel();
                     answerItemViewModel.AnswerId = answer.Id;
                     answerItemViewModel.Content = answer.Content;
                     Answers.Add(answerItemViewModel);
